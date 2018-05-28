@@ -7,7 +7,7 @@ bwa mem Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fast
 sambamba view -S -f bam na12878_wes.sam > na12878_wes.bam
 
 # Mark duplicates
-sambamba markdup na12878_wes.sorted.bam dedupped_na12878_wes.sorted.bam
+sambamba markdup na12878_wes.bam dedupped_na12878_wes.bam
 
 # Sort the BAM file
 sambamba sort dedupped_na12878_wes.bam
@@ -17,10 +17,10 @@ java -jar $PICARD AddOrReplaceReadGroups \
 I=$inputfile dedupped_na12878_wes.sorted.bam \
 O=$outputfile RG_dedupped_na12878_wes.sorted.bam \
 CREATE_INDEX=true \
-RGLB=$LB WES \
+RGLB=$LB na12878 \
 RGPL=$PL illumina \
 RGSM=$SM na12878 \
-RGPU=$PU slide_barcode
+RGPU=$PU wes
 
 # Call variants
 java -jar $GATK \
