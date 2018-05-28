@@ -7,10 +7,10 @@ bwa mem Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fast
 sambamba view -S -f bam na12878_wes.sam > na12878_wes.bam
 
 # Mark duplicates
-sambamba markdupe na12878_wgs.sorted.bam dedupped_na12878_wes.sorted.bam
+sambamba markdup na12878_wes.sorted.bam dedupped_na12878_wes.sorted.bam
 
 # Sort the BAM file
-sambamba sort na12878_wes.bam
+sambamba sort dedupped_na12878_wes.bam
 
 # Add readgroups
 java -jar $PICARD AddOrReplaceReadGroups \
@@ -26,7 +26,7 @@ RGPU=$PU slide_barcode
 java -jar $GATK \
 -T HaplotypeCaller \
 -R Homo_sapiens.GRCh37.GATK.illumina/Homo_sapiens.GRCh37.GATK.illumina.fasta  \
--I  RG_dedupped_na12878_wes.sorted.bam \
+-I RG_dedupped_na12878_wes.sorted.bam \
 -o RG_dedupped_na12878_wes.sorted.vcf
 
 # --------------------------------
